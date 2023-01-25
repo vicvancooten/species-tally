@@ -1,0 +1,21 @@
+.content {
+  margin: 1rem;
+}
+
+.inputheader {
+  width: 100%;
+  font-size: 3rem;
+  border: none;
+  background-color: transparent;
+  font-family: Roboto;
+  &:focus,
+  &:active {
+    border: none;
+  }
+}
+
+.animation {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}

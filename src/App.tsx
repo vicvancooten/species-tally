@@ -1,25 +1,77 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.scss";
+
+import { useEffect, useState } from "react";
+import { CategoryType } from "./Types";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+import CategoryBar from "./components/CategoryBar";
+import Category from "./components/Category";
 
 function App() {
+  // Categories
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>();
+  const [categories, setCategories] = useState<CategoryType[]>();
+  const [activeCategory, setActiveCategory] = useState<CategoryType>();
+
+  // Effects
+  // Bootup
+  useEffect(() => {
+    const ls = localStorage.getItem("data");
+    if (ls) {
+      setCategories(JSON.parse(ls));
+      setSelectedCategoryId(JSON.parse(localStorage.getItem("data")!)[0].key);
+    }
+  }, []);
+  // Track active category
+  useEffect(() => {
+    setActiveCategory(
+      categories?.find((cat) => cat.key === selectedCategoryId)
+    );
+  }, [categories, selectedCategoryId]);
+
+  // Watch categories and store in localstorage
+  useEffect(() => {
+    if (categories) {
+      localStorage.setItem("data", JSON.stringify(categories));
+    }
+  }, [categories]);
+
+  const theme = createTheme({
+    palette: { primary: { main: "#4874a8" }, secondary: { main: "#ffffff" } },
+  });
+
+  // UI
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div id="app">
+        <CategoryBar
+          categories={categories}
+          selectedCategoryId={selectedCategoryId}
+          setSelectedCategory={setSelectedCategoryId}
+          onAddCategory={(cat) => {
+            setCategories([...(categories ?? []), cat]);
+            setSelectedCategoryId(cat.key);
+          }}
+        />
+        <div id="content">
+          {activeCategory && (
+            <Category
+              category={activeCategory}
+              onUpdateCategory={(cat) => {
+                const newCategories = [...(categories || [])];
+                const changedIndex =
+                  categories?.findIndex((c) => c.key === selectedCategoryId) ??
+                  -1;
+                if (changedIndex > -1) {
+                  newCategories[changedIndex] = cat;
+                  setCategories(newCategories);
+                }
+              }}
+            />
+          )}
+        </div>
+      </div>
+    </ThemeProvider>
   );
 }
 
