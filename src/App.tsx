@@ -74,6 +74,22 @@ function App() {
                   setCategories(newCategories);
                 }
               }}
+              onDeleteCategory={() => {
+                const newCategories = [...(categories || [])];
+                const changedIndex =
+                  categories?.findIndex((c) => c.key === selectedCategoryId) ??
+                  -1;
+                if (changedIndex > -1) {
+                  newCategories.splice(changedIndex, 1);
+
+                  setCategories(
+                    newCategories.length > 0 ? newCategories : undefined
+                  );
+                  setSelectedCategoryId(
+                    newCategories.length > 0 ? newCategories[0].key : undefined
+                  );
+                }
+              }}
             />
           )}
         </div>

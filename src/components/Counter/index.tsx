@@ -1,7 +1,10 @@
-import { Menu, MenuItem } from "@mui/material";
+import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 import { CounterType } from "../../Types";
 import styles from "./styles.module.scss";
+
+import Icon from "@mdi/react";
+import { mdiMinusBoxOutline, mdiPlusBoxOutline } from "@mdi/js";
 
 const Counter: React.FC<{
   counter: CounterType;
@@ -25,13 +28,9 @@ const Counter: React.FC<{
                 mouseX: event.clientX + 2,
                 mouseY: event.clientY - 6,
               }
-            : // repeated contextmenu when it is already open closes it with Chrome 84 on Ubuntu
-              // Other native context menus might behave different.
-              // With this behavior we prevent contextmenu from the backdrop to re-locale existing context menus.
-              null
+            : null
         );
       }}
-      style={{ cursor: "context-menu" }}
     >
       <div className={styles.label}>
         <input
@@ -46,7 +45,22 @@ const Counter: React.FC<{
           }}
         />
       </div>
-      <div className={styles.count}>{counter.count}</div>
+      <div className={styles.count}>
+        <IconButton
+          onClick={(e) => {
+            if (counter.count > 0)
+              onUpdateCounter({ ...counter, count: counter.count - 1 });
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+        >
+          <Icon path={mdiMinusBoxOutline} size={1} />
+        </IconButton>{" "}
+        {counter.count}{" "}
+        <IconButton>
+          <Icon path={mdiPlusBoxOutline} size={1} />
+        </IconButton>
+      </div>
       <Menu
         open={contextMenu !== null}
         onClose={() => {

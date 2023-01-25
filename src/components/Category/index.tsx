@@ -6,12 +6,14 @@ import { motion } from "framer-motion";
 
 import Counter from "../Counter";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { cloneDeep } from "lodash";
+import Icon from "@mdi/react";
+import { mdiTrashCanOutline } from "@mdi/js";
 
 const Category: React.FC<{
   category: CategoryType;
   onUpdateCategory: (cat: CategoryType) => void;
-}> = ({ category, onUpdateCategory }) => {
+  onDeleteCategory: () => void;
+}> = ({ category, onUpdateCategory, onDeleteCategory }) => {
   const reorder = (list: any, startIndex: any, endIndex: any) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
@@ -125,6 +127,14 @@ const Category: React.FC<{
         }}
       >
         Add counter
+      </Button>{" "}
+      <Button
+        color="primary"
+        variant="contained"
+        startIcon={<Icon path={mdiTrashCanOutline} size={1} />}
+        onClick={onDeleteCategory}
+      >
+        Delete {category.label}
       </Button>
     </div>
   );
