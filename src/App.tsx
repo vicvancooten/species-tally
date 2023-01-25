@@ -52,6 +52,13 @@ function App() {
             setCategories([...(categories ?? []), cat]);
             setSelectedCategoryId(cat.key);
           }}
+          onLoadData={() => {
+            const input = window.prompt("Paste input file");
+            if (input) {
+              setCategories(JSON.parse(input));
+              window.location.reload();
+            }
+          }}
         />
         <div id="content">
           {activeCategory && (

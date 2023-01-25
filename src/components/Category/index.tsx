@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 
 import Counter from "../Counter";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { cloneDeep } from "lodash";
 
 const Category: React.FC<{
   category: CategoryType;
@@ -91,6 +92,11 @@ const Category: React.FC<{
                         >
                           <Counter
                             counter={counter}
+                            onDeleteCounter={() => {
+                              const counters = [...(category.counters ?? [])];
+                              counters.splice(index, 1);
+                              onUpdateCategory({ ...category, counters });
+                            }}
                             onUpdateCounter={(newCounter) => {
                               const counters = category.counters ?? [];
                               counters[index] = newCounter;
