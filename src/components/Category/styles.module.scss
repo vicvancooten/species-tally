@@ -19,3 +19,30 @@
   margin: 0;
   padding: 0;
 }
+.header {
+  display: flex;
+  align-items: center;
+  input {
+    flex: 2;
+  }
+  .controls {
+    flex: 1;
+    text-align: right;
+  }
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+    input {
+      flex: 1;
+    }
+    .controls {
+      flex: 1;
+      text-align: center;
+    }
+  }
+}
+
+.scrollContainer {
+  max-height: calc(100vh - 120px);
+  overflow-x: auto;
+  padding: 1rem;
+}

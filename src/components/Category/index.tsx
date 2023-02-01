@@ -24,13 +24,37 @@ const Category: React.FC<{
 
   return (
     <div className={styles.content}>
-      <input
-        className={styles.inputheader}
-        value={category.label}
-        onChange={(e) => {
-          onUpdateCategory({ ...category, label: e.target.value });
-        }}
-      />
+      <header className={styles.header}>
+        <input
+          className={styles.inputheader}
+          value={category.label}
+          onChange={(e) => {
+            onUpdateCategory({ ...category, label: e.target.value });
+          }}
+        />
+        <div className={styles.controls}>
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={() => {
+              const counters = category.counters ?? [];
+              counters.push({ label: `Item ${counters.length + 1}`, count: 0 });
+              onUpdateCategory({ ...category, counters });
+            }}
+          >
+            Add counter
+          </Button>{" "}
+          <Button
+            color="primary"
+            variant="contained"
+            startIcon={<Icon path={mdiTrashCanOutline} size={1} />}
+            onClick={onDeleteCategory}
+          >
+            Delete {category.label}
+          </Button>
+        </div>
+      </header>
+
       <hr />
       <DragDropContext
         onDragEnd={(result) => {
@@ -52,90 +76,72 @@ const Category: React.FC<{
           });
         }}
       >
-        <Droppable droppableId="list">
-          {(provided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              <motion.ul
-                variants={{
-                  hidden: { opacity: 0 },
-                  visible: {
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.1,
+        <div className={styles.scrollContainer}>
+          <Droppable droppableId="list">
+            {(provided) => (
+              <div ref={provided.innerRef} {...provided.droppableProps}>
+                <motion.ul
+                  variants={{
+                    hidden: { opacity: 0 },
+                    visible: {
+                      opacity: 1,
+                      transition: {
+                        staggerChildren: 0.1,
+                      },
                     },
-                  },
-                }}
-                initial="hidden"
-                animate="visible"
-                key={category.key}
-                className={styles.animation}
-              >
-                {category.counters?.map((counter, index) => (
-                  <Draggable
-                    draggableId={`${index}`}
-                    index={index}
-                    key={`${category.key}-${index}`}
-                  >
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        key={`${category.key}-${index}`}
-                      >
-                        <motion.li
-                          variants={{
-                            hidden: { y: 10, opacity: 0 },
-                            visible: {
-                              y: 0,
-                              opacity: 1,
-                            },
-                          }}
+                  }}
+                  initial="hidden"
+                  animate="visible"
+                  key={category.key}
+                  className={styles.animation}
+                >
+                  {category.counters?.map((counter, index) => (
+                    <Draggable
+                      draggableId={`${index}`}
+                      index={index}
+                      key={`${category.key}-${index}`}
+                    >
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          key={`${category.key}-${index}`}
                         >
-                          <Counter
-                            counter={counter}
-                            onDeleteCounter={() => {
-                              const counters = [...(category.counters ?? [])];
-                              counters.splice(index, 1);
-                              onUpdateCategory({ ...category, counters });
+                          <motion.li
+                            variants={{
+                              hidden: { y: 10, opacity: 0 },
+                              visible: {
+                                y: 0,
+                                opacity: 1,
+                              },
                             }}
-                            onUpdateCounter={(newCounter) => {
-                              const counters = category.counters ?? [];
-                              counters[index] = newCounter;
-                              onUpdateCategory({ ...category, counters });
-                            }}
-                          />
-                        </motion.li>
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-              </motion.ul>
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
+                          >
+                            <Counter
+                              counter={counter}
+                              onDeleteCounter={() => {
+                                const counters = [...(category.counters ?? [])];
+                                counters.splice(index, 1);
+                                onUpdateCategory({ ...category, counters });
+                              }}
+                              onUpdateCounter={(newCounter) => {
+                                const counters = category.counters ?? [];
+                                counters[index] = newCounter;
+                                onUpdateCategory({ ...category, counters });
+                              }}
+                            />
+                          </motion.li>
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                </motion.ul>
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </div>
       </DragDropContext>
-      <hr />
-      <Button
-        color="primary"
-        variant="outlined"
-        onClick={() => {
-          const counters = category.counters ?? [];
-          counters.push({ label: `Item ${counters.length + 1}`, count: 0 });
-          onUpdateCategory({ ...category, counters });
-        }}
-      >
-        Add counter
-      </Button>{" "}
-      <Button
-        color="primary"
-        variant="contained"
-        startIcon={<Icon path={mdiTrashCanOutline} size={1} />}
-        onClick={onDeleteCategory}
-      >
-        Delete {category.label}
-      </Button>
     </div>
   );
 };
