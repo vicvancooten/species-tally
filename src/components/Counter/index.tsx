@@ -19,7 +19,6 @@ const Counter: React.FC<{
   return (
     <div
       className={styles.counter}
-      onClick={() => onUpdateCounter({ ...counter, count: counter.count + 1 })}
       onContextMenu={(event: React.MouseEvent) => {
         event.preventDefault();
         setContextMenu(
@@ -56,8 +55,24 @@ const Counter: React.FC<{
         >
           <Icon path={mdiMinusBoxOutline} size={1} />
         </IconButton>{" "}
-        {counter.count}{" "}
-        <IconButton>
+        <input
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+          className={styles.counterInput}
+          step="1"
+          value={counter.count}
+          onChange={(e) => {
+            onUpdateCounter({ ...counter, count: parseFloat(e.target.value) });
+          }}
+          type="number"
+        />{" "}
+        <IconButton
+          onClick={() =>
+            onUpdateCounter({ ...counter, count: counter.count + 1 })
+          }
+        >
           <Icon path={mdiPlusBoxOutline} size={1} />
         </IconButton>
       </div>
