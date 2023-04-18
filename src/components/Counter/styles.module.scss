@@ -17,6 +17,11 @@
 .count {
   flex: 1;
   text-align: right;
+  @media only screen and (max-width: 800px) {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+  }
 }
 
 .input {
@@ -28,6 +33,9 @@
   &:hover {
     background-color: ddd;
     border: 1px solid #4874a8;
+  }
+  @media only screen and (max-width: 800px) {
+    font-size: 1.1rem;
   }
 }
 
@@ -42,5 +50,8 @@
   &:hover {
     background-color: ddd;
     border: 1px solid #4874a8;
+  }
+  @media only screen and (max-width: 800px) {
+    text-align: right;
   }
 }
