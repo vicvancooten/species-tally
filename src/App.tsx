@@ -1,44 +1,42 @@
-import "./App.scss";
+import './App.scss'
 
-import { useEffect, useState } from "react";
-import { CategoryType } from "./Types";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useEffect, useState } from 'react'
+import { CategoryType } from './Types'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 
-import CategoryBar from "./components/CategoryBar";
-import Category from "./components/Category";
+import CategoryBar from './components/CategoryBar'
+import Category from './components/Category'
 
 function App() {
   // Categories
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string>();
-  const [categories, setCategories] = useState<CategoryType[]>();
-  const [activeCategory, setActiveCategory] = useState<CategoryType>();
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>()
+  const [categories, setCategories] = useState<CategoryType[]>()
+  const [activeCategory, setActiveCategory] = useState<CategoryType>()
 
   // Effects
   // Bootup
   useEffect(() => {
-    const ls = localStorage.getItem("data");
+    const ls = localStorage.getItem('data')
     if (ls) {
-      setCategories(JSON.parse(ls));
-      setSelectedCategoryId(JSON.parse(localStorage.getItem("data")!)[0].key);
+      setCategories(JSON.parse(ls))
+      setSelectedCategoryId(JSON.parse(localStorage.getItem('data')!)[0].key)
     }
-  }, []);
+  }, [])
   // Track active category
   useEffect(() => {
-    setActiveCategory(
-      categories?.find((cat) => cat.key === selectedCategoryId)
-    );
-  }, [categories, selectedCategoryId]);
+    setActiveCategory(categories?.find((cat) => cat.key === selectedCategoryId))
+  }, [categories, selectedCategoryId])
 
   // Watch categories and store in localstorage
   useEffect(() => {
     if (categories) {
-      localStorage.setItem("data", JSON.stringify(categories));
+      localStorage.setItem('data', JSON.stringify(categories))
     }
-  }, [categories]);
+  }, [categories])
 
   const theme = createTheme({
-    palette: { primary: { main: "#4874a8" }, secondary: { main: "#ffffff" } },
-  });
+    palette: { primary: { main: '#4874a8' }, secondary: { main: '#ffffff' } },
+  })
 
   // UI
   return (
@@ -49,14 +47,14 @@ function App() {
           selectedCategoryId={selectedCategoryId}
           setSelectedCategory={setSelectedCategoryId}
           onAddCategory={(cat) => {
-            setCategories([...(categories ?? []), cat]);
-            setSelectedCategoryId(cat.key);
+            setCategories([...(categories ?? []), cat])
+            setSelectedCategoryId(cat.key)
           }}
           onLoadData={() => {
-            const input = window.prompt("Paste input file");
+            const input = window.prompt('Paste input file')
             if (input) {
-              setCategories(JSON.parse(input));
-              window.location.reload();
+              setCategories(JSON.parse(input))
+              window.location.reload()
             }
           }}
         />
@@ -65,29 +63,29 @@ function App() {
             <Category
               category={activeCategory}
               onUpdateCategory={(cat) => {
-                const newCategories = [...(categories || [])];
+                const newCategories = [...(categories || [])]
                 const changedIndex =
                   categories?.findIndex((c) => c.key === selectedCategoryId) ??
-                  -1;
+                  -1
                 if (changedIndex > -1) {
-                  newCategories[changedIndex] = cat;
-                  setCategories(newCategories);
+                  newCategories[changedIndex] = cat
+                  setCategories(newCategories)
                 }
               }}
               onDeleteCategory={() => {
-                const newCategories = [...(categories || [])];
+                const newCategories = [...(categories || [])]
                 const changedIndex =
                   categories?.findIndex((c) => c.key === selectedCategoryId) ??
-                  -1;
+                  -1
                 if (changedIndex > -1) {
-                  newCategories.splice(changedIndex, 1);
+                  newCategories.splice(changedIndex, 1)
 
                   setCategories(
                     newCategories.length > 0 ? newCategories : undefined
-                  );
+                  )
                   setSelectedCategoryId(
                     newCategories.length > 0 ? newCategories[0].key : undefined
-                  );
+                  )
                 }
               }}
             />
@@ -95,7 +93,7 @@ function App() {
         </div>
       </div>
     </ThemeProvider>
-  );
+  )
 }
 
-export default App;
+export default App

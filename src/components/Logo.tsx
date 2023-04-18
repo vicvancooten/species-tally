@@ -38,6 +38,6 @@ const Logo: React.FC<{ className: string; onClick: () => void }> = (props) => (
       />
     </g>
   </svg>
-);
+)
 
-export default Logo;
+export default Logo

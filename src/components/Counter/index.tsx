@@ -1,26 +1,26 @@
-import { IconButton, Menu, MenuItem } from "@mui/material";
-import { useState } from "react";
-import { CounterType } from "../../Types";
-import styles from "./styles.module.scss";
+import { IconButton, Menu, MenuItem } from '@mui/material'
+import { useState } from 'react'
+import { CounterType } from '../../Types'
+import styles from './styles.module.scss'
 
-import Icon from "@mdi/react";
-import { mdiMinusBoxOutline, mdiPlusBoxOutline } from "@mdi/js";
+import Icon from '@mdi/react'
+import { mdiMinusBoxOutline, mdiPlusBoxOutline } from '@mdi/js'
 
 const Counter: React.FC<{
-  counter: CounterType;
-  onUpdateCounter: (c: CounterType) => void;
-  onDeleteCounter: () => void;
+  counter: CounterType
+  onUpdateCounter: (c: CounterType) => void
+  onDeleteCounter: () => void
 }> = ({ counter, onUpdateCounter, onDeleteCounter }) => {
   const [contextMenu, setContextMenu] = useState<{
-    mouseX: number;
-    mouseY: number;
-  } | null>(null);
+    mouseX: number
+    mouseY: number
+  } | null>(null)
 
   return (
     <div
       className={styles.counter}
       onContextMenu={(event: React.MouseEvent) => {
-        event.preventDefault();
+        event.preventDefault()
         setContextMenu(
           contextMenu === null
             ? {
@@ -28,19 +28,19 @@ const Counter: React.FC<{
                 mouseY: event.clientY - 6,
               }
             : null
-        );
+        )
       }}
     >
       <div className={styles.label}>
         <input
           onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
+            e.preventDefault()
+            e.stopPropagation()
           }}
           className={styles.input}
           value={counter.label}
           onChange={(e) => {
-            onUpdateCounter({ ...counter, label: e.target.value });
+            onUpdateCounter({ ...counter, label: e.target.value })
           }}
         />
       </div>
@@ -48,26 +48,26 @@ const Counter: React.FC<{
         <IconButton
           onClick={(e) => {
             if (counter.count > 0)
-              onUpdateCounter({ ...counter, count: counter.count - 1 });
-            e.preventDefault();
-            e.stopPropagation();
+              onUpdateCounter({ ...counter, count: counter.count - 1 })
+            e.preventDefault()
+            e.stopPropagation()
           }}
         >
           <Icon path={mdiMinusBoxOutline} size={1} />
-        </IconButton>{" "}
+        </IconButton>{' '}
         <input
           onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
+            e.preventDefault()
+            e.stopPropagation()
           }}
           className={styles.counterInput}
           step="1"
           value={counter.count}
           onChange={(e) => {
-            onUpdateCounter({ ...counter, count: parseFloat(e.target.value) });
+            onUpdateCounter({ ...counter, count: parseFloat(e.target.value) })
           }}
           type="number"
-        />{" "}
+        />{' '}
         <IconButton
           onClick={() =>
             onUpdateCounter({ ...counter, count: counter.count + 1 })
@@ -79,7 +79,7 @@ const Counter: React.FC<{
       <Menu
         open={contextMenu !== null}
         onClose={() => {
-          setContextMenu(null);
+          setContextMenu(null)
         }}
         anchorReference="anchorPosition"
         anchorPosition={
@@ -90,17 +90,17 @@ const Counter: React.FC<{
       >
         <MenuItem
           onClick={(e) => {
-            onDeleteCounter();
-            setContextMenu(null);
-            e.preventDefault();
-            e.stopPropagation();
+            onDeleteCounter()
+            setContextMenu(null)
+            e.preventDefault()
+            e.stopPropagation()
           }}
         >
           Delete
         </MenuItem>
       </Menu>
     </div>
-  );
-};
+  )
+}
 
-export default Counter;
+export default Counter

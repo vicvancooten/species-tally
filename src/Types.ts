@@ -1,10 +1,10 @@
 export interface CategoryType {
-  label: string;
-  key: string;
-  counters?: CounterType[];
+  label: string
+  key: string
+  counters?: CounterType[]
 }
 
 export interface CounterType {
-  label: string;
-  count: number;
+  label: string
+  count: number
 }

@@ -1,26 +1,31 @@
-import styles from "./styles.module.scss";
+import styles from './styles.module.scss'
 
-import { CategoryType, CounterType } from "../../Types";
-import { Button } from "@mui/material";
-import { motion } from "framer-motion";
+import { CategoryType, CounterType } from '../../Types'
+import { Button } from '@mui/material'
+import { motion } from 'framer-motion'
 
-import Counter from "../Counter";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import Icon from "@mdi/react";
-import { mdiTrashCanOutline } from "@mdi/js";
+import Counter from '../Counter'
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+
+import Icon from '@mdi/react'
+import { mdiTrashCanOutline } from '@mdi/js'
 
 const Category: React.FC<{
-  category: CategoryType;
-  onUpdateCategory: (cat: CategoryType) => void;
-  onDeleteCategory: () => void;
+  category: CategoryType
+  onUpdateCategory: (cat: CategoryType) => void
+  onDeleteCategory: () => void
 }> = ({ category, onUpdateCategory, onDeleteCategory }) => {
   const reorder = (list: any, startIndex: any, endIndex: any) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
+    const result = Array.from(list)
+    const [removed] = result.splice(startIndex, 1)
+    result.splice(endIndex, 0, removed)
 
-    return result;
-  };
+    return result
+  }
+
+  const sum = (category.counters ?? [])
+    .map((product) => product.count)
+    .reduce((acc, curr) => acc + curr, 0)
 
   return (
     <div className={styles.content}>
@@ -29,21 +34,22 @@ const Category: React.FC<{
           className={styles.inputheader}
           value={category.label}
           onChange={(e) => {
-            onUpdateCategory({ ...category, label: e.target.value });
+            onUpdateCategory({ ...category, label: e.target.value })
           }}
         />
+        <div className={styles.total}>({sum} total)</div>
         <div className={styles.controls}>
           <Button
             color="primary"
             variant="outlined"
             onClick={() => {
-              const counters = category.counters ?? [];
-              counters.push({ label: `Item ${counters.length + 1}`, count: 0 });
-              onUpdateCategory({ ...category, counters });
+              const counters = category.counters ?? []
+              counters.push({ label: `Item ${counters.length + 1}`, count: 0 })
+              onUpdateCategory({ ...category, counters })
             }}
           >
             Add counter
-          </Button>{" "}
+          </Button>{' '}
           <Button
             color="primary"
             variant="contained"
@@ -59,11 +65,11 @@ const Category: React.FC<{
       <DragDropContext
         onDragEnd={(result) => {
           if (!result.destination) {
-            return;
+            return
           }
 
           if (result.destination.index === result.source.index) {
-            return;
+            return
           }
 
           onUpdateCategory({
@@ -73,7 +79,7 @@ const Category: React.FC<{
               result.source.index,
               result.destination.index
             ) as CounterType[],
-          });
+          })
         }}
       >
         <div className={styles.scrollContainer}>
@@ -120,14 +126,14 @@ const Category: React.FC<{
                             <Counter
                               counter={counter}
                               onDeleteCounter={() => {
-                                const counters = [...(category.counters ?? [])];
-                                counters.splice(index, 1);
-                                onUpdateCategory({ ...category, counters });
+                                const counters = [...(category.counters ?? [])]
+                                counters.splice(index, 1)
+                                onUpdateCategory({ ...category, counters })
                               }}
                               onUpdateCounter={(newCounter) => {
-                                const counters = category.counters ?? [];
-                                counters[index] = newCounter;
-                                onUpdateCategory({ ...category, counters });
+                                const counters = category.counters ?? []
+                                counters[index] = newCounter
+                                onUpdateCategory({ ...category, counters })
                               }}
                             />
                           </motion.li>
@@ -143,7 +149,7 @@ const Category: React.FC<{
         </div>
       </DragDropContext>
     </div>
-  );
-};
+  )
+}
 
-export default Category;
+export default Category

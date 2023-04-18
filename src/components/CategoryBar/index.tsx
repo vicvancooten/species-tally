@@ -1,22 +1,20 @@
-import { CategoryType, CounterType } from "../../Types";
-import styles from "./styles.module.scss";
+import { CategoryType, CounterType } from '../../Types'
+import styles from './styles.module.scss'
 
-import { Button, IconButton, Tab, Tabs } from "@mui/material";
+import { Button, IconButton, Tab, Tabs } from '@mui/material'
 
-import uniqid from "uniqid";
-import Logo from "../Logo";
-import Icon from "@mdi/react";
-import { mdiExportVariant, mdiImport } from "@mdi/js";
-import { saveAs } from "file-saver";
-
-<Icon path={mdiExportVariant} size={1} />;
+import uniqid from 'uniqid'
+import Logo from '../Logo'
+import Icon from '@mdi/react'
+import { mdiExportVariant, mdiImport } from '@mdi/js'
+import { saveAs } from 'file-saver'
 
 const CategoryBar: React.FC<{
-  categories?: CategoryType[];
-  setSelectedCategory: (cat: string) => void;
-  onAddCategory: (cat: CategoryType) => void;
-  onLoadData: () => void;
-  selectedCategoryId?: string;
+  categories?: CategoryType[]
+  setSelectedCategory: (cat: string) => void
+  onAddCategory: (cat: CategoryType) => void
+  onLoadData: () => void
+  selectedCategoryId?: string
 }> = ({
   categories,
   setSelectedCategory,
@@ -29,7 +27,7 @@ const CategoryBar: React.FC<{
       <Logo
         className={styles.logo}
         onClick={() => {
-          if (categories) setSelectedCategory(categories[0].key);
+          if (categories) setSelectedCategory(categories[0].key)
         }}
       />
       <div className={styles.content}>
@@ -44,7 +42,7 @@ const CategoryBar: React.FC<{
             aria-label="Categories"
             textColor="secondary"
             indicatorColor="secondary"
-            sx={{ borderRight: 1, borderColor: "divider" }}
+            sx={{ borderRight: 1, borderColor: 'divider' }}
           >
             {categories.map((category) => (
               <Tab
@@ -59,20 +57,20 @@ const CategoryBar: React.FC<{
           fullWidth
           color="secondary"
           onClick={() => {
-            const counters: CounterType[] = [];
+            const counters: CounterType[] = []
             if (categories) {
-              (categories?.[categories.length - 1].counters ?? []).forEach(
+              ;(categories?.[categories.length - 1].counters ?? []).forEach(
                 (counter) => {
-                  counters.push({ label: counter.label, count: 0 });
+                  counters.push({ label: counter.label, count: 0 })
                 }
-              );
+              )
             }
 
             onAddCategory({
               label: `Slide ${(categories?.length ?? 0) + 1}`,
               key: uniqid(),
               counters,
-            });
+            })
           }}
         >
           +
@@ -84,10 +82,10 @@ const CategoryBar: React.FC<{
           onClick={() => {
             saveAs(
               new Blob([JSON.stringify(categories)], {
-                type: "text/plain;charset=utf-8",
+                type: 'text/plain;charset=utf-8',
               }),
-              "tally-save"
-            );
+              'tally-save'
+            )
           }}
         >
           <Icon path={mdiExportVariant} size={1} />
@@ -97,7 +95,7 @@ const CategoryBar: React.FC<{
         </IconButton>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CategoryBar;
+export default CategoryBar
