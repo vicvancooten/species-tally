@@ -31,19 +31,17 @@ const Counter: React.FC<{
         )
       }}
     >
-      <div className={styles.label}>
-        <input
-          onClick={(e) => {
-            e.preventDefault()
-            e.stopPropagation()
-          }}
-          className={styles.input}
-          value={counter.label}
-          onChange={(e) => {
-            onUpdateCounter({ ...counter, label: e.target.value })
-          }}
-        />
-      </div>
+      <input
+        onClick={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+        }}
+        className={styles.input}
+        value={counter.label}
+        onChange={(e) => {
+          onUpdateCounter({ ...counter, label: e.target.value })
+        }}
+      />
       <div className={styles.count}>
         <IconButton
           onClick={(e) => {

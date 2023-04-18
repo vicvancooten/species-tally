@@ -30,12 +30,14 @@
   padding: 0.4rem;
   border: 1px solid transparent;
   border-radius: 0.3rem;
+  width: 50%;
   &:hover {
     background-color: ddd;
     border: 1px solid #4874a8;
   }
   @media only screen and (max-width: 800px) {
     font-size: 1.1rem;
+    width: 80%;
   }
 }
 
