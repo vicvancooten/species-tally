@@ -7,6 +7,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import CategoryBar from './components/CategoryBar'
 import Category from './components/Category'
 
+import { utils, write } from 'xlsx'
+import { saveAs } from 'file-saver'
+
 function App() {
   // Categories
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>()
@@ -38,6 +41,26 @@ function App() {
     palette: { primary: { main: '#4874a8' }, secondary: { main: '#ffffff' } },
   })
 
+  const exportToExcel = () => {
+    const data: [string, string, number | string][] = [
+      ['Category', 'Slide', 'Count'],
+    ]
+
+    categories?.forEach((category) => {
+      category.counters?.forEach((counter) => {
+        data.push([category.label, counter.label, counter.count])
+      })
+    })
+
+    const sheet = utils.aoa_to_sheet(data)
+    const workbook = utils.book_new()
+    utils.book_append_sheet(workbook, sheet, 'Sheet1')
+
+    const buffer = write(workbook, { bookType: 'xlsx', type: 'array' })
+    const blob = new Blob([buffer], { type: 'application/octet-stream' })
+    saveAs(blob, 'tally.xlsx')
+  }
+
   // UI
   return (
     <ThemeProvider theme={theme}>
@@ -57,6 +80,7 @@ function App() {
               window.location.reload()
             }
           }}
+          onExportToExcel={exportToExcel}
         />
         <div id="content">
           {activeCategory && (

@@ -6,7 +6,7 @@ import { Button, IconButton, Tab, Tabs } from '@mui/material'
 import uniqid from 'uniqid'
 import Logo from '../Logo'
 import Icon from '@mdi/react'
-import { mdiExportVariant, mdiImport } from '@mdi/js'
+import { mdiExportVariant, mdiImport, mdiMicrosoftExcel } from '@mdi/js'
 import { saveAs } from 'file-saver'
 
 const CategoryBar: React.FC<{
@@ -14,6 +14,7 @@ const CategoryBar: React.FC<{
   setSelectedCategory: (cat: string) => void
   onAddCategory: (cat: CategoryType) => void
   onLoadData: () => void
+  onExportToExcel: () => void
   selectedCategoryId?: string
 }> = ({
   categories,
@@ -21,6 +22,7 @@ const CategoryBar: React.FC<{
   onAddCategory,
   onLoadData,
   selectedCategoryId,
+  onExportToExcel,
 }) => {
   return (
     <div className={styles.bar}>
@@ -92,6 +94,9 @@ const CategoryBar: React.FC<{
         </IconButton>
         <IconButton title="Import" onClick={onLoadData}>
           <Icon path={mdiImport} size={1} />
+        </IconButton>
+        <IconButton title="Import" onClick={onExportToExcel}>
+          <Icon path={mdiMicrosoftExcel} size={1} />
         </IconButton>
       </div>
     </div>
