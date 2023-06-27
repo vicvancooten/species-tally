@@ -10,7 +10,7 @@
     "@mdi/react": "^1.6.1",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.13.3",
-    "@vercel/analytics": "^0.1.11",
+    "@vercel/analytics": "^1.0.1",
     "csv-stringify": "^6.3.3",
     "file-saver": "^2.0.5",
     "framer-motion": "^10.12.4",
