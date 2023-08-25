@@ -8,7 +8,7 @@
     "@fontsource/roboto": "^4.5.8",
     "@mdi/js": "^7.1.96",
     "@mdi/react": "^1.6.1",
-    "@mui/icons-material": "^5.11.0",
+    "@mui/icons-material": "^5.14.1",
     "@mui/material": "^5.13.6",
     "@vercel/analytics": "^1.0.1",
     "csv-stringify": "^6.4.0",
