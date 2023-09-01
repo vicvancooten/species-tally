@@ -13,7 +13,7 @@
     "@vercel/analytics": "^1.0.1",
     "csv-stringify": "^6.4.0",
     "file-saver": "^2.0.5",
-    "framer-motion": "^10.12.18",
+    "framer-motion": "^10.16.2",
     "lodash": "^4.17.21",
     "node-sass": "^8.0.0",
     "react": "^18.2.0",
