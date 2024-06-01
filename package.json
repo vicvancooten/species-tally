@@ -11,7 +11,7 @@
     "@mui/icons-material": "^5.14.7",
     "@mui/material": "^5.13.6",
     "@vercel/analytics": "^1.1.1",
-    "csv-stringify": "^6.4.2",
+    "csv-stringify": "^6.5.0",
     "file-saver": "^2.0.5",
     "framer-motion": "^10.16.2",
     "lodash": "^4.17.21",
