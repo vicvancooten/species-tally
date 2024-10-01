@@ -9,7 +9,7 @@
     "@mdi/js": "^7.1.96",
     "@mdi/react": "^1.6.1",
     "@mui/icons-material": "^5.16.6",
-    "@mui/material": "^5.13.6",
+    "@mui/material": "^5.16.7",
     "@vercel/analytics": "^1.3.1",
     "csv-stringify": "^6.5.0",
     "file-saver": "^2.0.5",
